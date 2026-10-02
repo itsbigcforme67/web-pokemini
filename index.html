@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#16181d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Pokémon mini">
+  <title>Web Pokémon mini</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ============ LIBRARY ============ -->
+  <section id="library" class="view active">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <h1>Pokémon mini</h1>
+          <p id="sync-status" class="muted">Starting…</p>
+        </div>
+      </div>
+      <button id="btn-menu" class="icon-btn" aria-label="Settings">⋯</button>
+    </header>
+
+    <div id="bios-banner" class="banner hidden">
+      <div><strong>One-time setup:</strong> load your Pokémon mini BIOS dump (a 4 KB file, <code>.min</code> or <code>.bin</code>, or a <code>.zip</code> containing it). It stays on this device.</div>
+      <label class="btn primary small">Choose BIOS file<input id="bios-input" type="file" hidden></label>
+    </div>
+
+    <main id="lib-content">
+      <h2 class="section-title">Games</h2>
+      <div id="game-grid" class="game-grid"></div>
+      <p id="no-games" class="empty hidden"><span class="pc-only">No games yet. Put <code>.min</code> files (or zips of them) in your ROM folder on the PC, or import them below.</span><span class="web-only">No games yet. Tap <strong>Import ROM or save…</strong> and choose your own Pokémon mini game dumps (<code>.min</code> files, or zips of them). They are stored on this device only.</span></p>
+      <div class="import-row">
+        <label class="btn">Import ROM or save…<input id="import-input" type="file" multiple hidden></label>
+      </div>
+    </main>
+  </section>
+
+  <!-- ============ PLAYER ============ -->
+  <section id="player" class="view">
+    <header class="player-bar">
+      <button id="btn-back" class="icon-btn" aria-label="Back to library">‹</button>
+      <div class="player-title">
+        <span id="game-title">—</span>
+        <span id="game-sub" class="muted"></span>
+      </div>
+      <button id="btn-ff" class="icon-btn" aria-label="Fast forward">»</button>
+      <button id="btn-sound" class="icon-btn" aria-label="Sound">🔈</button>
+      <button id="btn-pmenu" class="icon-btn" aria-label="Options">⋯</button>
+    </header>
+
+    <div class="device-wrap">
+      <div class="device" id="device">
+        <div class="screen-area">
+          <div class="screen-bezel">
+            <canvas id="lcd" width="480" height="320" aria-label="Game screen"></canvas>
+          </div>
+          <div class="device-label"><span class="pwr" id="rumble-dot"></span>mini</div>
+        </div>
+        <div class="controls">
+          <div class="dpad" aria-label="Direction pad">
+            <button class="pbtn up" data-btn="8" aria-label="Up"></button>
+            <button class="pbtn left" data-btn="32" aria-label="Left"></button>
+            <button class="pbtn right" data-btn="64" aria-label="Right"></button>
+            <button class="pbtn down" data-btn="16" aria-label="Down"></button>
+            <span class="dpad-hub"></span>
+          </div>
+          <div class="face">
+            <button class="pbtn round c" data-btn="4" aria-label="C"><span>C</span></button>
+            <button class="pbtn round a" data-btn="1" aria-label="A"><span>A</span></button>
+            <button class="pbtn round b" data-btn="2" aria-label="B"><span>B</span></button>
+          </div>
+        </div>
+        <div class="bottom-row">
+          <button class="pill-btn" id="btn-shake" aria-label="Shake">shake</button>
+          <button class="pill-btn" data-btn="128" aria-label="Power">power</button>
+        </div>
+      </div>
+      <p id="unsynced" class="unsynced hidden">Save changed on this phone. <button id="btn-sync-now" class="link">Send to PC</button></p>
+    </div>
+  </section>
+
+  <!-- ============ SHEETS / DIALOGS ============ -->
+  <div id="sheet" class="sheet hidden" role="dialog" aria-modal="true">
+    <div class="sheet-panel">
+      <h3 id="sheet-title"></h3>
+      <div id="sheet-body"></div>
+      <div id="sheet-actions" class="sheet-actions"></div>
+    </div>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
